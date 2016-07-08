@@ -1,0 +1,50 @@
+{
+  "name": "reng",
+  "version": "1.0.0",
+  "description": "A client/server app framework built around redux and angular2.",
+  "main": "lib/local/index.js",
+  "files": [
+    "lib/local/"
+  ],
+  "scripts": {
+    "lint": "build-lint \"src/**/*.js\" \"!src/public/**/*\" \"!src/styles/**/*\" \"!src/tests/fixtures/**/*\"",
+    "unit-test": "build-test \"lib/tests/**/*.spec.js\" -c \"lib/**/*.js\" -c \"!lib/tests/**/*.js\" --lines 75",
+    "transform": "build-transform \"src/local/**/*.[tj]s\" \"src/tests/**/*.[tj]s\" -i src ",
+    "test": "npm run lint && npm run transform && npm run unit-test",
+    "build": "npm run transform",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iservices/reng.git"
+  },
+  "keywords": [
+    "flux",
+    "redux",
+    "angular2"
+  ],
+  "author": "natewallace@gmail.com",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@angular/common": "^2.0.0-rc.1",
+    "@angular/compiler": "^2.0.0-rc.1",
+    "@angular/core": "^2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+    "@angular/router": "^3.0.0-beta.2",
+    "core-js": "^2.4.0",
+    "debug": "^2.2.0",
+    "fake-storage": "^1.0.3",
+    "redux": "^3.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "^5.0.0-beta.1",
+    "xmlhttprequest": "^1.8.0",
+    "zone.js": "^0.6.4"
+  },
+  "devDependencies": {
+    "build-lint": "^2.0.0",
+    "build-test": "^2.0.0",
+    "build-transform": "^2.0.0",
+    "jsdom": "^9.4.0"
+  }
+}
