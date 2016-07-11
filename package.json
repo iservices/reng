@@ -1,6 +1,6 @@
 {
   "name": "reng",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A client/server app framework built around redux and angular2.",
   "main": "lib/local/index.js",
   "files": [

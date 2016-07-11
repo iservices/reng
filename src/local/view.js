@@ -200,7 +200,7 @@ export default class View {
     // manual subscriptions
     if (this.subscriptions[event.type]) {
       for (let i = 0; i < this.subscriptions[event.type].length; i++) {
-        this.subscriptions[event.type](event);
+        this.subscriptions[event.type][i](event);
       }
     }
   }
