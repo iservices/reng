@@ -14,9 +14,8 @@ describe('Page', function () {
   it('Simple page renders as expected.', function (done) {
     Test.run(DetailView)
       .then(function () {
-        const span = document.querySelector('span');
-        assert.ok(span, 'could not find span element');
-        assert.equal(span.innerHTML, 'Details', 'span does not have correct value');
+        assert.ok(Test.exists('span'), 'could not find span element');
+        assert.equal(Test.getInnerHTML('span'), 'Details', 'span does not have correct value');
         done();
       })
       .catch(function (err) {

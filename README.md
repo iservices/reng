@@ -525,6 +525,18 @@ Each property can be any one of the following:
 **Returns:** `Promise`
 A promise that resolve to the page that is loaded for the test.
 
+## (static) exists(element) ⇒ Boolean
+Check to see if the given element exists.
+
+**Parameters:**
+
+| Param | Type | Attributes | Description |
+| --- | --- | --- | --- |
+| element | String or Element | | This can be the actual element or a query string used to identify the element. |
+
+**Returns:** `Boolean`
+true if the element is found, false if it isn't.
+
 ## (static) getInnerHTML(element) ⇒ String
 Get the inner html for the given element.
 

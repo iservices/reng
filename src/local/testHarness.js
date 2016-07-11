@@ -148,6 +148,18 @@ export default class TestHarness {
   }
 
   /**
+   * This function will check for the given element.
+   *
+   * @param {String|Element} element - This can be the actual element or a query string used to identify the element.
+   * @return {Boolean} true if the element is found, false if it isn't.
+   */
+  static exists(element) {
+    const resolvedElement = (typeof element === 'string') ? document.querySelector(element) : element;
+    if (!resolvedElement) return false;
+    return true;
+  }
+
+  /**
    * This function will get the innerHTML for the given element.
    *
    * @param {String|Element} element - This can be the actual element or a query string used to identify the element.
