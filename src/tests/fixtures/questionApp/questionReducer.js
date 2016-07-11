@@ -6,11 +6,11 @@ export default class QuestionReducer extends Reng.Reducer {
     this.mQuestionIdNext = 0;
   }
 
-  actionAddQuestion(state, action) {
+  actionAddQuestion(state, event) {
     return [...state, {
       id: ++this.mQuestionIdNext,
-      subject: action.subject,
-      body: action.body
+      subject: event.args.subject,
+      body: event.args.body
     }];
   }
 }

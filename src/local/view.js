@@ -155,6 +155,14 @@ export default class View {
   }
 
   /**
+   * Manual subscriptions for events.  Should only be used for testing.
+   */
+  get subscriptions() {
+    if (!this.mSubscriptions) this.mSubscriptions = {};
+    return this.mSubscriptions;
+  }
+
+  /**
    * Emit an event.
    *
    * @param {String} eventName - The event name.
@@ -188,6 +196,13 @@ export default class View {
       // default
       this.output.emit(event);
     }
+
+    // manual subscriptions
+    if (this.subscriptions[event.type]) {
+      for (let i = 0; i < this.subscriptions[event.type].length; i++) {
+        this.subscriptions[event.type](event);
+      }
+    }
   }
 
   /**
@@ -202,14 +217,22 @@ export default class View {
     let map = null;
     let event = null;
     if (arguments.length === 3) {
+      // name, function, event
       if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function' && typeof arguments[2] === 'object') {
         map = { [arguments[0]]: arguments[1] };
         event = arguments[2];
       }
     } else if (arguments.length === 2) {
       if (typeof arguments[0] === 'object' && typeof arguments[1] === 'object') {
+        // map, event
         map = arguments[0];
         event = arguments[1];
+      } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+        // name, function
+        map = arguments[0];
+        const func = arguments[1];
+        if (!this.subscriptions[name]) this.subscriptions[name] = [func];
+        else this.subscriptions[name].push(func);
       }
     }
 
@@ -217,7 +240,7 @@ export default class View {
       throw new Error('Invalid arguments.');
     }
 
-    if (typeof map[event.type] === 'function') {
+    if (event && typeof map[event.type] === 'function') {
       map[event.type](event);
     }
   }

@@ -1,5 +1,5 @@
 
-import PageBuilder from '../local/pageBuilder';
+import Test from '../local/testHarness';
 import CountReducer from './fixtures/callOut/countReducer';
 import * as assert from 'assert';
 
@@ -8,7 +8,7 @@ import * as assert from 'assert';
  */
 describe('Reducer', function () {
   it('Simple reducer works as expected.', function (done) {
-    PageBuilder.test(
+    Test.run(
       CountReducer,
       1,
       {

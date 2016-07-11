@@ -4,8 +4,8 @@ import Reng from '../../../local/index';
   selector: 'QuestionAddView',
   template: `<div>
     <form>
-      <input id="questionSubject" [(value)]="data.subject" type="text" placeholder="subject" />
-      <input id="questionBody" [(value)]="data.body" type="text" placeholder="body" />
+      <input id="questionSubject" [(ngModel)]="data.subject" type="text" placeholder="subject">
+      <input id="questionBody" [(ngModel)]="data.body" type="text" placeholder="body">
       <button id="questionAdd" type="button" (click)="handleClick()">Create</button>
     </form>
   </div>`

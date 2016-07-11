@@ -1,9 +1,10 @@
 import DetailView from './fixtures/simpleApp/detailView';
 import CountAppView from './fixtures/countApp/countAppView';
+import CountIncrementView from './fixtures/countApp/countIncrementView';
 import QuestionAppView from './fixtures/questionApp/questionAppView';
 import CallOutView from './fixtures/callOut/countAppView';
 import RouteRoot from './fixtures/routes/root.component';
-import PageBuilder from '../local/pageBuilder';
+import Test from '../local/testHarness';
 import * as assert from 'assert';
 
 /**
@@ -11,7 +12,7 @@ import * as assert from 'assert';
  */
 describe('Page', function () {
   it('Simple page renders as expected.', function (done) {
-    PageBuilder.test(DetailView)
+    Test.run(DetailView)
       .then(function () {
         const span = document.querySelector('span');
         assert.ok(span, 'could not find span element');
@@ -24,7 +25,7 @@ describe('Page', function () {
   });
 
   it('Page with events renders and behaves as expected.', function (done) {
-    PageBuilder.test(
+    Test.run(
       CountAppView,
       { count: 0 },
       {
@@ -33,23 +34,12 @@ describe('Page', function () {
           local: { text: 'world' }
         }
       })
-      .then(function (page) {
-        page.tick();
-        let displayCount = document.querySelector('#countDisplay');
-        const incrementCount = document.querySelector('#countIncrement');
-
-        assert.ok(displayCount, 'could not find countDisplay element');
-        assert.equal(displayCount.innerHTML, '0', 'countDisplay has incorrect value.');
-        assert.ok(incrementCount, 'could not find countIncrement element');
-
-        // simulate a click on the increment count element.
-        incrementCount.dispatchEvent(new window.Event('click'));
-        page.tick();
+      .then(() => {
+        assert.equal(Test.getInnerHTML('#countDisplay'), '0', 'countDisplay has incorrect value.');
+        Test.click('#countIncrement');
 
         setTimeout(function () {
-          displayCount = document.querySelector('#countDisplay');
-          assert.ok(displayCount, 'could not find countDisplay element after click.');
-          assert.equal(displayCount.innerHTML, '1', 'countDisplay has incorrect value after click.');
+          assert.equal(Test.getInnerHTML('#countDisplay'), '1', 'countDisplay has incorrect value after click.');
           done();
         }, 100);
       })
@@ -58,25 +48,24 @@ describe('Page', function () {
       });
   });
 
+  it('CountIncrementView should work with subscriptions', function (done) {
+    Test.run(CountIncrementView).then(page => {
+      page.view.subscribe('Increment', event => {
+        assert.equal(event.type, 'Increment');
+      });
+      Test.click('#countIncrement');
+      done();
+    }).catch(err => done(err));
+  });
+
   it('QuestionPage renders and behaves as expected.', function (done) {
-    PageBuilder.test(QuestionAppView, { questions: [] })
-      .then(function (page) {
-        page.tick();
-        let questionSize = document.querySelector('#questionSize');
-        const questionAdd = document.querySelector('#questionAdd');
-
-        assert.ok(questionSize, 'could not find questionSize element');
-        assert.equal(questionSize.innerHTML, '0', 'questionSize has incorrect value.');
-        assert.ok(questionAdd, 'could not find questionAdd element');
-
-        // simulate a click on the increment count element.
-        questionAdd.dispatchEvent(new window.Event('click'));
-        page.tick();
+    Test.run(QuestionAppView, { questions: [] })
+      .then(() => {
+        assert.equal(Test.getInnerHTML('#questionSize'), '0', 'questionSize has incorrect value.');
+        Test.click('#questionAdd');
 
         setTimeout(function () {
-          questionSize = document.querySelector('#questionSize');
-          assert.ok(questionSize, 'could not find questionSize element after click.');
-          assert.equal(questionSize.innerHTML, '1', 'questionSize has incorrect value after click.');
+          assert.equal(Test.getInnerHTML('#questionSize'), '1', 'questionSize has incorrect value after click.');
           done();
         }, 100);
       })
@@ -86,7 +75,7 @@ describe('Page', function () {
   });
 
   it('Should handle request overrides as expected.', function (done) {
-    PageBuilder.test(
+    Test.run(
       CallOutView,
       { count: 5 },
       {
@@ -98,26 +87,15 @@ describe('Page', function () {
         store: {
           action: {
             IncrementComplete: () => {
-              const displayCount = document.querySelector('#countDisplay');
-              assert.ok(displayCount, 'could not find countDisplay element after click.');
-              assert.equal(displayCount.innerHTML, '6', 'countDisplay has incorrect value after click.');
+              assert.equal(Test.getInnerHTML('#countDisplay'), '6', 'countDisplay has incorrect value after click.');
               done();
             }
           }
         }
       })
-      .then(function (page) {
-        page.tick();
-        const displayCount = document.querySelector('#countDisplay');
-        const incrementCount = document.querySelector('#countIncrement');
-
-        assert.ok(displayCount, 'could not find countDisplay element');
-        assert.equal(displayCount.innerHTML, '5', 'countDisplay has incorrect value.');
-        assert.ok(incrementCount, 'could not find countIncrement element');
-
-        // simulate a click on the increment count element.
-        incrementCount.dispatchEvent(new window.Event('click'));
-        page.tick();
+      .then(() => {
+        assert.equal(Test.getInnerHTML('#countDisplay'), '5', 'countDisplay has incorrect value.');
+        Test.click('#countIncrement');
       })
       .catch(function (err) {
         done(err);
@@ -126,17 +104,13 @@ describe('Page', function () {
 
   it('Should handle routes ok.', function (done) {
     // window.location = { href: '/one' };
-    PageBuilder.test(RouteRoot, {}, { url: 'http://localhost' })
+    Test.run(RouteRoot, {}, { url: 'http://localhost' })
       .then(page => {
-        const displayDefault = document.querySelector('#default');
-        assert.ok(displayDefault, 'could not find displayDefault element.');
-        assert.equal(displayDefault.innerHTML, 'Hello from default', 'displayDefault has incorrect value.');
+        assert.equal(Test.getInnerHTML('#default'), 'Hello from default', 'displayDefault has incorrect value.');
 
         page.navigate('http://localhost/one')
           .then(() => {
-            const displaySubOne = document.querySelector('#sub1');
-            assert.ok(displaySubOne, 'could not find displaySubOne element.');
-            assert.equal(displaySubOne.innerHTML, 'Hello from sub one', 'displaySubOne has incorrect value.');
+            assert.equal(Test.getInnerHTML('#sub1'), 'Hello from sub one', 'displaySubOne has incorrect value.');
             done();
           });
       });
