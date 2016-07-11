@@ -130,7 +130,7 @@ export default class Http {
             try {
               const contentType = xhr.getResponseHeader('Content-Type');
               const isJSON = (contentType && contentType.toLowerCase().indexOf('application/json') !== -1);
-              if (xhr.status < 299) {
+              if (xhr.status > 0 && xhr.status < 299) {
                 if (isJSON) {
                   resolve(format(JSON.parse(xhr.responseText)));
                 } else {
