@@ -132,13 +132,13 @@ export default class Http {
               const isJSON = (contentType && contentType.toLowerCase().indexOf('application/json') !== -1);
               if (xhr.status < 299) {
                 if (isJSON) {
-                  resolve(format(JSON.parse(xhr.response)));
+                  resolve(format(JSON.parse(xhr.responseText)));
                 } else {
                   resolve(format(xhr));
                 }
               } else {
                 if (isJSON) {
-                  reject(JSON.parse(xhr.response));
+                  reject(JSON.parse(xhr.responseText));
                 } else {
                   reject(new Error(`${xhr.status}: ${xhr.statusText}`));
                 }
