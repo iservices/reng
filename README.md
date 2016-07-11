@@ -549,6 +549,19 @@ Get the inner html for the given element.
 **Returns:** `String`
 The inner html for the given element.
 
+## (static) getAttribute(element, attributeName) ⇒ String
+Get the named attribute for the given element.
+
+**Parameters:**
+
+| Param | Type | Attributes | Description |
+| --- | --- | --- | --- |
+| element | String or Element | | This can be the actual element or a query string used to identify the element. |
+| attributeName | String | | The name of the attribute to get the value from. |
+
+**Returns:** `String`
+The value of the named attribute.
+
 ## (static) setValue(element, value) ⇒ void
 Set the value parameter for the given element and raise the appropriate events.
 

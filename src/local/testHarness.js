@@ -172,6 +172,21 @@ export default class TestHarness {
   }
 
   /**
+   * Get the named attribute for the given element.
+   *
+   * @param {String|Element} element - This can be the actual element or a query string used to identify the element.
+   * @param {String} attributeName - The name of the attribute to get the value from.
+   * @return {String} The value of the named attribute.
+   */
+  static getAttribute(element, attributeName) {
+    const resolvedElement = (typeof element === 'string') ? document.querySelector(element) : element;
+    if (!resolvedElement) throw new Error('Invalid element: ' + element);
+    return resolvedElement.attributes[attributeName] ?
+      resolvedElement.attributes[attributeName].value :
+      undefined;
+  }
+
+  /**
    * This function will set the value for the given element as well as raise the appropriate events.
    *
    * @param {String|Element} element - This can be the actual element or a query string used to identify the element.
