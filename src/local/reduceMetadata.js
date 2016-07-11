@@ -34,7 +34,7 @@ export default class ReduceMetadata {
     }
 
     if (typeof reduceDef === 'function') {
-      return this.reduceDef.bind(view);
+      return view.createReducer(this.reduceDef, view.input);
     }
 
     const reducers = {};
