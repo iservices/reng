@@ -231,8 +231,8 @@ export default class View {
         // name, function
         map = arguments[0];
         const func = arguments[1];
-        if (!this.subscriptions[name]) this.subscriptions[name] = [func];
-        else this.subscriptions[name].push(func);
+        if (!this.subscriptions[map]) this.subscriptions[map] = [func];
+        else this.subscriptions[map].push(func);
       }
     }
 
