@@ -479,8 +479,15 @@ A static version of the renderToTemplate instance function.
 
 **Returns:** `String`
 The HTML that will load the given view.
+  
+  
+  
+## **TestHarness** (class)
+This class contains functions used to perform unit tests.
 
-## (static) test(type, inputᵒᵖᵗ, optsᵒᵖᵗ) ⇒ Promise
+## *Functions*
+
+## (static) run(type, inputᵒᵖᵗ, optsᵒᵖᵗ) ⇒ Promise
 This function is used to help with unit testing of views and reducers.  It returns a promies that resolves with the
 loaded view or reducer.
 
@@ -517,9 +524,56 @@ Each property can be any one of the following:
   
 **Returns:** `Promise`
 A promise that resolve to the page that is loaded for the test.
+
+## (static) getInnerHTML(element) ⇒ String
+Get the inner html for the given element.
+
+**Parameters:**
+
+| Param | Type | Attributes | Description |
+| --- | --- | --- | --- |
+| element | String or Element | | This can be the actual element or a query string used to identify the element. |
+
+**Returns:** `String`
+The inner html for the given element.
+
+## (static) setValue(element, value) ⇒ void
+Set the value parameter for the given element and raise the appropriate events.
+
+**Parameters:**
+
+| Param | Type | Attributes | Description |
+| --- | --- | --- | --- |
+| element | String or Element | | This can be the actual element or a query string used to identify the element. |
+| value | String | | The value to set for the element |
+
+**Returns:** `void`
+
+## (static) setValueAll(elements, value) ⇒ void
+Set the value parameter for the given elements and raise the appropriate events.
+
+**Parameters:**
+
+| Param | Type | Attributes | Description |
+| --- | --- | --- | --- |
+| elements | String or Element[] | | This can be the actual elements or a query string used to identify the elements. |
+| value | String | | The value to set for the elements |
+
+**Returns:** `void`
+
+## (static) click(element) ⇒ void
+Raise the click event for the given element.
+
+**Parameters:**
+
+| Param | Type | Attributes | Description |
+| --- | --- | --- | --- |
+| element | String or Element | | This can be the actual element or a query string used to identify the element. |
+
+**Returns:** `void`
+  
   
 
-  
 ## **Errors** (class)
 This class contains all of the logic for handling errors that may occur.
 
