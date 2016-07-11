@@ -129,6 +129,23 @@ export default class Reducer {
   }
 
   /**
+   * Emit an event.
+   *
+   * @param {String} eventName - The event name.
+   * @param {Object} eventArgs - The event arguments.
+   * @param {Object} [context] - Optional context for the event.
+   * @return {void}
+   */
+  emit(eventName, eventArgs, context) {
+    this.store.dispatch({
+      type: eventName,
+      args: eventArgs,
+      sender: this,
+      context
+    });
+  }
+
+  /**
    * Execute action against the state.
    *
    * @param {Object} state - The previous state.

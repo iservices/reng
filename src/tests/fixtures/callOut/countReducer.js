@@ -6,15 +6,13 @@ class CountReducer extends Reng.Reducer {
     const self = this;
     self.http.request({ method: 'GET', url: 'http://fake.org/functions/increment', body: state })
       .then(result => {
-        self.store.dispatch({
-          type: 'IncrementComplete',
+        self.emit('IncrementComplete', {
           result,
           error: null
         });
       })
       .catch(error => {
-        self.store.dispatch({
-          type: 'IncrementComplete',
+        self.emit('IncrementComplete', {
           result: 0,
           error
         });
@@ -23,12 +21,12 @@ class CountReducer extends Reng.Reducer {
     return state;
   }
 
-  actionIncrementComplete(state, action) {
-    if (action.error) {
-      this.errors.handle(action.error);
+  actionIncrementComplete(state, event) {
+    if (event.args.error) {
+      this.errors.handle(event.args.error);
       return state;
     }
-    return action.result;
+    return event.args.result;
   }
 }
 

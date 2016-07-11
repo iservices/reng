@@ -29,9 +29,7 @@ describe('Reducer', function () {
     )
       .then(reducer => {
         assert.equal(reducer.store.getState(), 1, 'initial state is incorrect.');
-        reducer.store.dispatch({
-          type: 'Increment'
-        });
+        reducer.emit('Increment');
       })
       .catch(err => {
         done(err);

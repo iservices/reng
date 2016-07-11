@@ -7,7 +7,7 @@ import CountReducer from './countReducer';
   selector: 'CountApp',
   template: `<div>
     <CountDisplayView [input]="input.count"></CountDisplayView>
-    <CountIncrementView [emitter]="{ type: 'DISPATCH' }"></CountIncrementView>
+    <CountIncrementView [emitter]="{ type: { Increment: 'DISPATCH' } }"></CountIncrementView>
   </div>`,
   directives: [CountDisplayView, CountIncrementView]
 })

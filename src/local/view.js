@@ -168,11 +168,25 @@ export default class View {
       sender: this,
       context: this.emitter.context
     };
-    if (this.emitter.type === 'EVENT' || this.emitter.type === 'BOTH') {
+    if (typeof this.emitter.type === 'string') {
+      // global setting for type
+      if (this.emitter.type === 'EVENT' || this.emitter.type === 'BOTH') {
+        this.output.emit(event);
+      }
+      if (this.emitter.type === 'DISPATCH' || this.emitter.type === 'BOTH') {
+        this.__store.dispatch(event);
+      }
+    } else if (typeof this.emitter.type === 'object') {
+      // event specific settings
+      if (this.emitter.type[event.type] === 'EVENT' || this.emitter.type[event.type] === 'BOTH') {
+        this.output.emit(event);
+      }
+      if (this.emitter.type[event.type] === 'DISPATCH' || this.emitter.type[event.type] === 'BOTH') {
+        this.__store.dispatch(event);
+      }
+    } else {
+      // default
       this.output.emit(event);
-    }
-    if (this.emitter.type === 'DISPATCH' || this.emitter.type === 'BOTH') {
-      this.__store.dispatch(event);
     }
   }
 
