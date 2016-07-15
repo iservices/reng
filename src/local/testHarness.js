@@ -1,3 +1,4 @@
+require('reflect-metadata');
 import * as JSDOM from 'jsdom';
 import * as XHR from 'xmlhttprequest';
 import * as nodeDebug from 'debug';
